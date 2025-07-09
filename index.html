@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Countdown</title>
+    <!-- Tailwind CSS CDN for easy styling and responsiveness -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a classic, aesthetic look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Classic white background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure it takes full viewport height for centering */
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars if content is slightly larger */
+        }
+
+        .countdown-container {
+            background-color: #ffffff; /* White background for the container */
+            color: #000000; /* Black text */
+            padding: 2rem;
+            border-radius: 1rem; /* Rounded corners for aesthetic appeal */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            text-align: center;
+            max-width: 90%; /* Responsive width */
+            width: 500px; /* Max width for larger screens */
+        }
+
+        .countdown-title {
+            font-size: 1.5rem; /* Responsive font size */
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333333; /* Slightly softer black for title */
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 1rem; /* Space between time units */
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            background-color: #f8f8f8; /* Light grey background for units */
+            min-width: 80px; /* Minimum width for units */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Inner shadow for depth */
+        }
+
+        .time-value {
+            font-size: 2.5rem; /* Large font for numbers */
+            font-weight: 700;
+            line-height: 1; /* Adjust line height for numbers */
+            color: #000000; /* Black for numbers */
+        }
+
+        .time-label {
+            font-size: 0.9rem; /* Smaller font for labels */
+            text-transform: uppercase;
+            color: #555555; /* Dark grey for labels */
+            margin-top: 0.5rem;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 640px) {
+            .countdown-container {
+                padding: 1.5rem;
+            }
+            .countdown-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            .time-unit {
+                padding: 0.5rem 0.75rem;
+                min-width: 70px;
+            }
+            .time-value {
+                font-size: 2rem;
+            }
+            .time-label {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="countdown-container">
+        <h1 class="countdown-title">The Countdown to Our Big Day.</h1>
+        <div class="countdown-timer" id="countdown">
+            <div class="time-unit">
+                <span class="time-value" id="days">00</span>
+                <span class="time-label">Days</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="hours">00</span>
+                <span class="time-label">Hours</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="minutes">00</span>
+                <span class="time-label">Minutes</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="seconds">00</span>
+                <span class="time-label">Seconds</span>
+            </div>
+        </div>
+        <p class="mt-6 text-sm text-gray-600" id="countdown-message"></p>
+    </div>
+
+    <script>
+        // Set the target date for the wedding (November 22, 2025)
+        // Month is 0-indexed, so November is 10.
+        const targetDate = new Date('November 22, 2025 00:00:00').getTime();
+
+        /**
+         * Updates the countdown timer display.
+         */
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Get elements for displaying time
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            const messageEl = document.getElementById('countdown-message');
+            const countdownContainer = document.getElementById('countdown');
+
+            if (distance < 0) {
+                // If the countdown is over
+                clearInterval(countdownInterval); // Stop the timer
+                daysEl.textContent = '00';
+                hoursEl.textContent = '00';
+                minutesEl.textContent = '00';
+                secondsEl.textContent = '00';
+                messageEl.textContent = "The big day is here! Congratulations!";
+                countdownContainer.innerHTML = `
+                    <div class="text-3xl font-bold text-black">The Big Day Is Here!</div>
+                    <div class="text-xl mt-2 text-gray-700">Congratulations!</div>
+                `; // Update display for completion
+                return;
+            }
+
+            // Calculate time units
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Update the display with leading zeros
+            daysEl.textContent = String(days).padStart(2, '0');
+            hoursEl.textContent = String(hours).padStart(2, '0');
+            minutesEl.textContent = String(minutes).padStart(2, '0');
+            secondsEl.textContent = String(seconds).padStart(2, '0');
+            //messageEl.textContent = "Counting down to the special moment!";
+        }
+
+        // Update the countdown every 1 second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Initial call to display the countdown immediately without waiting for 1 second
+        updateCountdown();
+    </script>
+
+</body>
+</html>
