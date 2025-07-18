@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harshit & Varsha Wedding Invitation</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter and Cormorant Garamond -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF; /* Pure White */
+            color: #222222; /* Very Dark Grey for text */
+            line-height: 1.6;
+            background-image: none; /* Remove floral pattern */
+        }
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .section-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000; /* Black */
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #000000; /* Black underline */
+            border-radius: 9999px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .btn-primary {
+            background-color: #000000; /* Black */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .btn-primary:hover {
+            background-color: #333333; /* Darker Black */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
+        }
+        .btn-secondary {
+            background-color: #F0F0F0; /* Light Grey */
+            color: #222222; /* Dark Grey */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .btn-secondary:hover {
+            background-color: #E0E0E0; /* Slightly Darker Light Grey */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: #000000; /* Black */
+            border-radius: 50%;
+            z-index: 1;
+            border: 3px solid #FFFFFF; /* Matches body background */
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0.7rem;
+            top: 2rem;
+            bottom: -1rem;
+            width: 2px;
+            background-color: #000000; /* Black */
+            z-index: 0;
+        }
+        .timeline-item:last-child::after {
+            display: none; /* Hide line for the last item */
+        }
+        .timeline-date {
+            font-weight: 600;
+            color: #444444; /* Dark Grey */
+            margin-bottom: 0.5rem;
+        }
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000000; /* Black */
+            margin-bottom: 0.5rem;
+        }
+        .timeline-details-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .timeline-details-content.expanded {
+            max-height: 1000px; /* Arbitrary large value for smooth transition */
+            transition: max-height 0.7s ease-in;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            backdrop-filter: blur(5px); /* Blur background */
+            -webkit-backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s forwards;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            margin: 5% auto; /* 5% from the top and centered */
+            padding: 2rem;
+            border-radius: 1.5rem;
+            width: 90%; /* Could be more responsive */
+            max-width: 600px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s forwards;
+        }
+        .close-button {
+            color: #888;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #000000; /* Black */
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .hero-content {
+                flex-direction: row;
+                text-align: left;
+            }
+            .hero-text {
+                margin-right: 2rem;
+                margin-bottom: 0;
+            }
+            .countdown-timer {
+                flex-direction: row;
+                justify-content: center;
+                gap: 2rem;
+            }
+            .countdown-item {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="relative bg-white py-8 md:py-16 overflow-hidden shadow-lg">
+        <div class="container text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-black leading-tight mb-4">
+                Harshit <span class="text-black">&</span> Varsha
+            </h1>
+            <!-- Removed: <p class="text-xl md:text-2xl text-gray-700 font-medium mb-6">Are getting married!</p> -->
+        </div>
+
+        <!-- Full-width image placeholder - no rounded corners, no shadow -->
+        <div class="w-full h-48 md:h-64 lg:h-80 overflow-hidden relative z-10">
+            <img src="https://placehold.co/1200x400/CCCCCC/333333?text=Harshit+%26+Varsha" alt="Harshit & Varsha" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Decorative elements (removed or made white/transparent) -->
+        <div class="absolute top-0 left-0 w-32 h-32 bg-white rounded-full opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-48 h-48 bg-white rounded-full opacity-30 translate-x-1/2 translate-y-1/2"></div>
+    </header>
+
+    <main class="container py-8">
+
+        <!-- Countdown Timer Section -->
+        <section id="countdown" class="mb-12">
+            <div class="bg-white bg-opacity-80 p-6 rounded-2xl shadow-xl backdrop-blur-sm text-center max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold text-black mb-4">The Big Day Is Almost Here!</h2>
+                <div id="countdown-timer" class="flex flex-wrap justify-center gap-4 text-center">
+                    <!-- Countdown items will be injected here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section id="timeline" class="mb-12">
+            <h2 class="section-heading">Our Journey & Events</h2>
+            <div id="events-timeline" class="relative pl-4 md:pl-8">
+                <!-- Timeline items will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="mb-12">
+            <h2 class="section-heading">RSVP</h2>
+            <div class="card text-center">
+                <p class="text-lg mb-6 text-gray-700">Please let us know if you can make it to celebrate with us!</p>
+                <button id="rsvp-button" class="btn-primary inline-flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-check"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h10"/><path d="m15 17 2 2 4-4"/></svg>
+                    <span>RSVP Now</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Contacts Section -->
+        <section id="contacts" class="mb-12">
+            <h2 class="section-heading">Contacts</h2>
+            <div class="card text-center">
+                <p class="text-lg mb-6 text-gray-700">Need to reach out? Here are some helpful contacts:</p>
+                <button id="contacts-button" class="btn-secondary inline-flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span>Important Contacts</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="mb-12">
+            <h2 class="section-heading">Frequently Asked Questions</h2>
+            <div class="card">
+                <!-- FAQ Item 1: Visiting Delhi in November? -->
+                <div class="mb-4 pb-4 border-b border-gray-200 last:border-b-0">
+                    <button class="faq-toggle w-full text-left font-semibold text-lg text-gray-700 hover:text-black flex justify-between items-center py-2">
+                        <span>Visiting Delhi in November?</span>
+                        <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-500 ease-in-out text-gray-600">
+                        <div class="pt-2">
+                            <p class="mb-2">November in Delhi marks the beginning of winter, offering pleasant weather for sightseeing. The average temperature on November 22nd typically ranges from <strong>12°C to 25°C (54°F to 77°F)</strong>. Expect clear skies and comfortable, crisp air, making it an ideal time to explore the city.</p>
+                            <h3 class="font-bold text-md text-black mt-4 mb-2">Things to Check Out & Try:</h3>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Historical Monuments:</strong> Explore iconic sites like India Gate, Qutub Minar, Humayun's Tomb, Red Fort, and Lotus Temple.</li>
+                                <li><strong>Street Food:</strong> Indulge in Delhi's famous street food at Chandni Chowk (Parathe Wali Gali, Jalebi, Chole Bhature).</li>
+                                <li><strong>Shopping:</strong> Visit Dilli Haat for handicrafts, Sarojini Nagar for trendy clothes, or Connaught Place for a mix of everything.</li>
+                                <li><strong>Museums & Galleries:</strong> Discover the National Museum, National Rail Museum, or the Crafts Museum.</li>
+                                <li><strong>Gardens:</strong> Enjoy a peaceful stroll in Lodhi Garden or Garden of Five Senses.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2: Travel and Accommodation -->
+                <div class="mb-4 pb-4 border-b border-gray-200 last:border-b-0">
+                    <button class="faq-toggle w-full text-left font-semibold text-lg text-gray-700 hover:text-black flex justify-between items-center py-2">
+                        <span>Travel and Accommodation</span>
+                        <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-500 ease-in-out text-gray-600">
+                        <div class="pt-2">
+                            <h3 class="font-bold text-md text-black mb-2">Airports:</h3>
+                            <ul class="list-disc list-inside ml-4 mb-4">
+                                <li><strong>Indira Gandhi International Airport (DEL):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Terminal 3:</strong> Major international and domestic flights.</li>
+                                        <li><strong>Terminal 2:</strong> Select domestic flights (e.g., IndiGo, SpiceJet).</li>
+                                        <li><strong>Terminal 1:</strong> Budget domestic carriers (e.g., IndiGo, SpiceJet, Akasa Air).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3 class="font-bold text-md text-black mb-2">Major Railway Stations:</h3>
+                            <ul class="list-disc list-inside ml-4 mb-4">
+                                <li><strong>New Delhi Railway Station (NDLS):</strong> Main station connecting to most major cities.</li>
+                                <li><strong>Old Delhi Railway Station (DLI):</strong> Historic station, serving northern and eastern India.</li>
+                                <li><strong>Hazrat Nizamuddin Railway Station (NZM):</strong> Important for trains to southern India.</li>
+                                <li><strong>Anand Vihar Terminal (ANVT):</strong> Primarily serves eastern states.</li>
+                            </ul>
+                            <h3 class="font-bold text-md text-black mb-2">Accommodation:</h3>
+                            <p class="mb-2">We have arranged for special rates at select hotels. Please RSVP for hotel check-in details, and we will share the booking information and coordination contacts with you directly.</p>
+                            <p>For any specific accommodation queries, please contact Uday Yadav or Luv Yadav (details available via the Contacts button).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modals -->
+
+    <!-- RSVP Modal -->
+    <div id="rsvp-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 class="text-2xl font-bold text-black mb-6 text-center">RSVP for Harshit & Varsha's Wedding</h3>
+            <form id="rsvp-form" class="space-y-4">
+                <div>
+                    <label for="rsvp-name" class="block text-gray-700 text-sm font-bold mb-2">Your Name:</label>
+                    <input type="text" id="rsvp-name" name="name" required class="shadow appearance-none border rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition duration-200">
+                </div>
+                <div>
+                    <label for="rsvp-message" class="block text-gray-700 text-sm font-bold mb-2">Your Message (Optional):</label>
+                    <textarea id="rsvp-message" name="message" rows="4" class="shadow appearance-none border rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition duration-200"></textarea>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="btn-primary inline-flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M15 15l4 4"/></svg>
+                        <span>Submit RSVP</span>
+                    </button>
+                </div>
+            </form>
+            <div id="rsvp-message-box" class="mt-4 p-3 bg-gray-100 text-gray-800 rounded-lg text-center hidden">
+                Thank you for your RSVP!
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts Modal -->
+    <div id="contacts-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 class="text-2xl font-bold text-black mb-6 text-center">Important Contacts</h3>
+            <div class="space-y-4 text-center">
+                <a href="https://wa.me/919876543210?text=Hello%20Uday%2C%20I%20have%20a%20question%20about%20the%20wedding." target="_blank" class="btn-primary w-full md:w-auto inline-flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                    <span>Contact Uday Yadav (Groom's Brother)</span>
+                </a>
+                <a href="https://wa.me/919988776655?text=Hello%20Luv%2C%20I%20have%20a%20question%20about%20the%20wedding." target="_blank" class="btn-primary w-full md:w-auto inline-flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                    <span>Contact Luv Yadav (Bride's Brother)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lucide Icons (for example, if you wanted to use them directly via SVG)
+        // This is just for reference, the current implementation uses simple SVG paths.
+        // For a full library, you'd typically import it or use a CDN.
+        // For this project, I've manually added the SVG paths for the few icons used.
+
+        // --- Countdown Timer Logic ---
+        const weddingDate = new Date('2025-11-22T22:30:00'); // 22 Nov 2025, 10:30 PM
+        const countdownTimerEl = document.getElementById('countdown-timer');
+
+        function updateCountdown() {
+            const now = new Date();
+            const timeDifference = weddingDate.getTime() - now.getTime(); // Difference in milliseconds
+
+            let displayHtml = '';
+
+            if (timeDifference > 0) {
+                // Countdown to wedding
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                displayHtml = `
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${days}</div>
+                        <div class="text-sm text-gray-600">Days</div>
+                    </div>
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${hours}</div>
+                        <div class="text-sm text-gray-600">Hours</div>
+                    </div>
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${minutes}</div>
+                        <div class="text-sm text-gray-600">Minutes</div>
+                    </div>
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${seconds}</div>
+                        <div class="text-sm text-gray-600">Seconds</div>
+                    </div>
+                `;
+            } else {
+                // Happily Married counter
+                const marriedDuration = now.getTime() - weddingDate.getTime();
+
+                const seconds = Math.floor((marriedDuration / 1000) % 60);
+                const minutes = Math.floor((marriedDuration / (1000 * 60)) % 60);
+                const hours = Math.floor((marriedDuration / (1000 * 60 * 60)) % 24);
+                const days = Math.floor(marriedDuration / (1000 * 60 * 60 * 24));
+
+                let years = 0;
+                let months = 0;
+
+                // Calculate years and months more accurately
+                let tempDate = new Date(weddingDate);
+                while (tempDate.getTime() <= now.getTime()) {
+                    tempDate.setFullYear(tempDate.getFullYear() + 1);
+                    if (tempDate.getTime() <= now.getTime()) {
+                        years++;
+                    } else {
+                        tempDate.setFullYear(tempDate.getFullYear() - 1); // Revert last year increment
+                        break;
+                    }
+                }
+
+                tempDate = new Date(weddingDate);
+                tempDate.setFullYear(weddingDate.getFullYear() + years); // Start from the anniversary year
+                while (tempDate.getTime() <= now.getTime()) {
+                    tempDate.setMonth(tempDate.getMonth() + 1);
+                    if (tempDate.getTime() <= now.getTime()) {
+                        months++;
+                    } else {
+                        tempDate.setMonth(tempDate.getMonth() - 1); // Revert last month increment
+                        break;
+                    }
+                }
+                // Adjust months if it goes over 12 for the current year
+                months = months % 12;
+
+
+                displayHtml = `
+                    <p class="text-2xl md:text-3xl font-bold text-black w-full mb-4">Happily Married For:</p>
+                `;
+
+                if (years >= 1) {
+                    displayHtml += `
+                        <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                            <div class="text-4xl font-bold text-black">${years}</div>
+                            <div class="text-sm text-gray-600">Years</div>
+                        </div>
+                    `;
+                }
+                displayHtml += `
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${months}</div>
+                        <div class="text-sm text-gray-600">Months</div>
+                    </div>
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${days % 30}</div> <!-- Days remaining in current month -->
+                        <div class="text-sm text-gray-600">Days</div>
+                    </div>
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${hours}</div>
+                        <div class="text-sm text-gray-600">Hours</div>
+                    </div>
+                `;
+            }
+            countdownTimerEl.innerHTML = displayHtml;
+        }
+
+        // Update every second
+        setInterval(updateCountdown, 1000);
+        // Initial call to display immediately
+        updateCountdown();
+
+        // --- Event Timeline Logic ---
+        const events = [
+            {
+                id: 'engagement',
+                date: 'November 13, 2025',
+                time: '7:00 PM onwards',
+                title: 'Engagement Ceremony',
+                venue: 'The Grand Ballroom, Hotel Leela Palace',
+                address: 'Diplomatic Enclave, Chanakyapuri, New Delhi, Delhi 110023',
+                coordinates: { lat: 28.5989, lon: 77.1706 }, // Approximate coordinates for Leela Palace
+                geocode: '28.5989,77.1706',
+                description: 'Join us for a joyous evening as Harshit and Varsha exchange rings and begin their journey together.',
+                googleMapLink: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.8270557432616!2d77.1680950751913!3d28.59890697568551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1d911e0337c7%3A0x72a514d4e21a224a!2sThe%20Leela%20Palace%20New%20Delhi!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin',
+                gcalStartDate: '20251113T190000', // YYYYMMDDTHHMMSS
+                gcalEndDate: '20251113T220000',
+            },
+            {
+                id: 'haldi',
+                date: 'November 21, 2025',
+                time: '10:00 AM onwards',
+                title: 'Haldi Ceremony',
+                venue: 'Bride\'s Residence, Karol Bagh',
+                address: 'Karol Bagh, New Delhi',
+                coordinates: { lat: 28.6481, lon: 77.1873 }, // Approximate coordinates for Karol Bagh
+                geocode: '28.6481,77.1873',
+                description: 'A traditional Haldi ceremony to bless the bride with good fortune and prosperity.',
+                googleMapLink: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.077209804812!2d77.18479507519283!3d28.6481009756819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd61998533b3%3A0x1e36d4f4d2f1f2a!2sKarol%20Bagh%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000001!5m2!1sen!2sin',
+                gcalStartDate: '20251121T100000',
+                gcalEndDate: '20251121T130000',
+            },
+            {
+                id: 'sangeet',
+                date: 'November 21, 2025',
+                time: '7:00 PM onwards',
+                title: 'Sangeet & Cocktail Night',
+                venue: 'The Royal Gardens, Aerocity',
+                address: 'Aerocity, New Delhi',
+                coordinates: { lat: 28.5562, lon: 77.1000 }, // Approximate coordinates for Aerocity
+                geocode: '28.5562,77.1000',
+                description: 'An evening of music, dance, and celebration with family and friends.',
+                googleMapLink: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.744111111111!2d77.09749507518976!3d28.55623897568903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1d07c0e5b7a7%3A0x8a9e7d9b7c8e2b!2sAerocity%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000002!5m2!1sen!2sin',
+                gcalStartDate: '20251121T190000',
+                gcalEndDate: '20251121T230000',
+            },
+            {
+                id: 'wedding',
+                date: 'November 22, 2025',
+                time: '10:30 PM onwards',
+                title: 'Wedding Ceremony & Reception',
+                venue: 'The Grand Celebration Hall, Dwarka',
+                address: 'Dwarka, New Delhi',
+                coordinates: { lat: 28.5989, lon: 77.0189 }, // Approximate coordinates for Dwarka
+                geocode: '28.5989,77.0189',
+                description: 'The auspicious wedding ceremony followed by a grand reception to celebrate the newlyweds.',
+                googleMapLink: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.8270557432616!2d77.0163950751913!3d28.59890697568551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1c0b00000001%3A0x72a514d4e21a224a!2sDwarka%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000003!5m2!1sen!2sin',
+                gcalStartDate: '20251122T223000',
+                gcalEndDate: '20251123T020000',
+            }
+        ];
+
+        const eventsTimelineEl = document.getElementById('events-timeline');
+
+        function renderEvents() {
+            eventsTimelineEl.innerHTML = events.map(event => `
+                <div class="timeline-item card">
+                    <div class="timeline-date text-sm md:text-base">${event.date}</div>
+                    <h3 class="timeline-title">${event.title}</h3>
+                    <p class="text-gray-600 mb-2">${event.time} | ${event.venue}</p>
+                    <button class="btn-secondary toggle-details inline-flex items-center space-x-2 text-sm md:text-base" data-event-id="${event.id}">
+                        <svg class="w-4 h-4 transform transition-transform duration-300 rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <span>View Details</span>
+                    </button>
+
+                    <div id="details-${event.id}" class="timeline-details-content mt-4">
+                        <p class="text-gray-700 mb-3">${event.description}</p>
+                        <p class="text-gray-700 mb-2"><strong>Venue:</strong> ${event.venue}</p>
+                        <p class="text-gray-700 mb-2"><strong>Address:</strong> ${event.address}</p>
+                        <p class="text-gray-700 mb-4"><strong>Coordinates:</strong> ${event.geocode}</p>
+
+                        <div class="google-map-embed mb-4 rounded-xl overflow-hidden shadow-md">
+                            <iframe src="${event.googleMapLink}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3 mb-6">
+                            <a href="https://m.uber.com/ul/?action=setPickup&dropoff[latitude]=${event.coordinates.lat}&dropoff[longitude]=${event.coordinates.lon}&dropoff[nickname]=${encodeURIComponent(event.venue)}" target="_blank" class="btn-primary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                                <span>Book Uber</span>
+                            </a>
+                            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.gcalStartDate}/${event.gcalEndDate}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.venue + ', ' + event.address)}&sf=true&output=xml" target="_blank" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-plus"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M19 16v6"/><path d="M22 19h-6"/></svg>
+                                <span>Add to Google Calendar</span>
+                            </a>
+                            <button onclick="addToOutlook('${event.title}', '${event.gcalStartDate}', '${event.gcalEndDate}', '${event.description}', '${event.venue}, ${event.address}')" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M12 16h.01"/><path d="M16 16h.01"/><path d="M8 20h.01"/><path d="M12 20h.01"/><path d="M16 20h.01"/></svg>
+                                <span>Add to Outlook</span>
+                            </button>
+                            <button onclick="generateIcal('${event.title}', '${event.gcalStartDate}', '${event.gcalEndDate}', '${event.description}', '${event.venue}, ${event.address}')" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                <span>Add to iCal</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add event listeners for toggling details
+            document.querySelectorAll('.toggle-details').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const eventId = e.currentTarget.dataset.eventId;
+                    const detailsContent = document.getElementById(`details-${eventId}`);
+                    const icon = e.currentTarget.querySelector('svg');
+
+                    if (detailsContent.classList.contains('expanded')) {
+                        detailsContent.classList.remove('expanded');
+                        icon.classList.remove('rotate-180');
+                        e.currentTarget.querySelector('span').textContent = 'View Details';
+                    } else {
+                        detailsContent.classList.add('expanded');
+                        icon.classList.add('rotate-180');
+                        e.currentTarget.querySelector('span').textContent = 'Hide Details';
+                    }
+                });
+            });
+        }
+
+        // Function to add to Outlook Calendar (simplified approach)
+        // Outlook's direct URL template is complex. This will create a .ics file.
+        function addToOutlook(title, startDate, endDate, description, location) {
+            generateIcal(title, startDate, endDate, description, location); // Outlook often handles .ics files
+        }
+
+        // Function to generate and download .ics file for iCal/Outlook
+        function generateIcal(title, startDate, endDate, description, location) {
+            const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//HarshitAndVarshaWedding//NONSGML v1.0//EN
+BEGIN:VEVENT
+UID:${new Date().getTime()}@harshitvarsha.com
+DTSTAMP:${new Date().toISOString().replace(/[-:]|\.\d{3}/g, '')}Z
+DTSTART:${startDate}
+DTEND:${endDate}
+SUMMARY:${title}
+DESCRIPTION:${description}
+LOCATION:${location}
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title.replace(/\s/g, '_')}.ics`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        renderEvents(); // Initial render of events
+
+        // --- Modals Logic (RSVP & Contacts) ---
+        const rsvpModal = document.getElementById('rsvp-modal');
+        const contactsModal = document.getElementById('contacts-modal');
+        const rsvpButton = document.getElementById('rsvp-button');
+        const contactsButton = document.getElementById('contacts-button');
+        const rsvpForm = document.getElementById('rsvp-form');
+        const rsvpMessageBox = document.getElementById('rsvp-message-box');
+
+        // Get all close buttons
+        document.querySelectorAll('.close-button').forEach(button => {
+            button.addEventListener('click', () => {
+                rsvpModal.style.display = 'none';
+                contactsModal.style.display = 'none';
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target == rsvpModal) {
+                rsvpModal.style.display = 'none';
+            }
+            if (event.target == contactsModal) {
+                contactsModal.style.display = 'none';
+            }
+        });
+
+        // Open RSVP modal
+        rsvpButton.addEventListener('click', () => {
+            rsvpModal.style.display = 'block';
+            rsvpMessageBox.classList.add('hidden'); // Hide message box on open
+            rsvpForm.reset(); // Clear form on open
+        });
+
+        // Open Contacts modal
+        contactsButton.addEventListener('click', () => {
+            contactsModal.style.display = 'block';
+        });
+
+        // Handle RSVP form submission
+        rsvpForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('rsvp-name').value;
+            const message = document.getElementById('rsvp-message').value;
+
+            // Placeholder for REST endpoint submission
+            const endpoint = 'https://your-backend-api.com/rsvp'; // Replace with actual endpoint
+
+            try {
+                // Simulate API call
+                console.log('Submitting RSVP:', { name, message });
+                // const response = await fetch(endpoint, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ name, message }),
+                // });
+
+                // if (response.ok) {
+                    rsvpMessageBox.textContent = 'Thank you for your RSVP!';
+                    rsvpMessageBox.classList.remove('hidden');
+                    rsvpMessageBox.classList.remove('bg-green-100', 'text-green-800'); // Remove previous color
+                    rsvpMessageBox.classList.add('bg-gray-100', 'text-gray-800'); // Use grayscale for success
+                    rsvpForm.reset(); // Clear the form
+                    setTimeout(() => {
+                        rsvpModal.style.display = 'none'; // Close modal after a short delay
+                    }, 2000);
+                // } else {
+                //     rsvpMessageBox.textContent = 'Failed to send RSVP. Please try again.';
+                //     rsvpMessageBox.classList.remove('hidden');
+                //     rsvpMessageBox.classList.remove('bg-green-100', 'text-green-800'); // Remove previous color
+                //     rsvpMessageBox.classList.add('bg-gray-100', 'text-gray-800'); // Use grayscale for error
+                // }
+            } catch (error) {
+                console.error('Error submitting RSVP:', error);
+                rsvpMessageBox.textContent = 'An error occurred. Please try again later.';
+                rsvpMessageBox.classList.remove('hidden');
+                rsvpMessageBox.classList.remove('bg-green-100', 'text-green-800'); // Remove previous color
+                rsvpMessageBox.classList.add('bg-gray-100', 'text-gray-800'); // Use grayscale for error
+                }
+        });
+
+        // --- FAQ Accordion Logic ---
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('svg');
+
+                if (content.classList.contains('expanded')) {
+                    content.classList.remove('expanded');
+                    content.style.maxHeight = '0';
+                    icon.classList.remove('rotate-180');
+                } else {
+                    // Close other open FAQ items
+                    document.querySelectorAll('.faq-content.expanded').forEach(openContent => {
+                        openContent.classList.remove('expanded');
+                        openContent.style.maxHeight = '0';
+                        openContent.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+                    });
+
+                    content.classList.add('expanded');
+                    content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Ensure max-height is correct on window resize for FAQ
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.faq-content.expanded').forEach(content => {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            });
+        });
+
+    </script>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-200 text-black text-center py-6 mt-12 rounded-t-3xl shadow-inner">
+        <div class="container">
+            <p>&copy; 2025 Harshit & Varsha. Made by <a href="https://www.harshityadav.in/about" target="_blank" class="font-semibold hover:underline text-black">Harshit Yadav</a></p>
+        </div>
+    </footer>
+</body>
+</html>
