@@ -613,7 +613,7 @@
 
         // --- Event Timeline Logic ---
         const events = [
-                        {
+            {
                 id: 'roka',
                 date: 'June 29, 2025',
                 time: '6:00 PM onwards',
@@ -626,6 +626,7 @@
                 googleMapLink: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4166.7034927913255!2d77.138618!3d28.6559746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d0305dff4c347%3A0xcb063b89a76b582b!2sClay%201%20Grill%20%E2%80%93%20Restaurant%20%26%20Party%20Hall%20in%20Moti%20Nagar!5e1!3m2!1sen!2sin!4v1753710495618!5m2!1sen!2sin',
                 gcalStartDate: '20250629T180000', // YYYYMMDDTHHMMSS
                 gcalEndDate: '20250629T220000',
+                uberLink: 'https://m.uber.com/ul/?action=setPickup&dropoff[latitude]=28.65614406470334&dropoff[longitude]=77.13863945767147&dropoff[nickname]=Clay%201%20Grill%20%E2%80%93%20Party%20Hall'
             },
 
             {
@@ -696,7 +697,7 @@
                         </div>
 
                         <div class="flex flex-wrap gap-3 mb-6">
-                            <a href="https://m.uber.com/ul/?action=setPickup&dropoff[latitude]=${event.coordinates.lat}&dropoff[longitude]=${event.coordinates.lon}&dropoff[nickname]=${encodeURIComponent(event.venue)}" target="_blank" class="btn-primary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                            <a href="${event.id === 'roka' ? event.uberLink : `https://m.uber.com/ul/?action=setPickup&dropoff[latitude]=${event.coordinates.lat}&dropoff[longitude]=${event.coordinates.lon}&dropoff[nickname]=${encodeURIComponent(event.venue)}`}" target="_blank" class="btn-primary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
                                 <span>Book Uber</span>
                             </a>
