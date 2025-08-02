@@ -684,65 +684,77 @@
 
         function renderEvents() {
             eventsTimelineEl.innerHTML = events.map(event => `
-                <div class="timeline-item card">
-                    <div class="timeline-date text-sm md:text-base">${event.date}</div>
-                    <h3 class="timeline-title">${event.title}</h3>
-                    <p class="text-gray-600 mb-2">${event.time} | ${event.venue}</p>
-                    <button class="btn-secondary toggle-details inline-flex items-center space-x-2 text-sm md:text-base" data-event-id="${event.id}">
-                        <svg class="w-4 h-4 transform transition-transform duration-300 rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        <span>View Details</span>
-                    </button>
+        <div class="timeline-item card">
+            <div class="timeline-date text-sm md:text-base">${event.date}</div>
+            <h3 class="timeline-title">${event.title}</h3>
+            <p class="text-gray-600 mb-2">${event.time} | ${event.venue}</p>
+            <button class="btn-secondary toggle-details inline-flex items-center space-x-2 text-sm md:text-base" data-event-id="${event.id}">
+                <svg class="w-4 h-4 transform transition-transform duration-300 rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <span>View Details</span>
+            </button>
 
-                    <div id="details-${event.id}" class="timeline-details-content mt-4">
-                        <p class="text-gray-700 mb-3">${event.description}</p>
-                        <p class="text-gray-700 mb-2"><strong>Venue:</strong> ${event.venue}</p>
-                        <p class="text-gray-700 mb-2"><strong>Address:</strong> ${event.address}</p>
-                        <p class="text-gray-700 mb-4"><strong>Coordinates:</strong> ${event.geocode}</p>
+            <div id="details-${event.id}" class="timeline-details-content mt-4">
+                <p class="text-gray-700 mb-3">${event.description}</p>
+                <p class="text-gray-700 mb-2"><strong>Venue:</strong> ${event.venue}</p>
+                <p class="text-gray-700 mb-2"><strong>Address:</strong> ${event.address}</p>
+                <p class="text-gray-700 mb-4"><strong>Coordinates:</strong> ${event.geocode}</p>
 
-                        <div class="google-map-embed mb-4 rounded-xl overflow-hidden shadow-md">
-                            <iframe src="${event.googleMapLink}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
+                <div class="google-map-embed mb-4 rounded-xl overflow-hidden shadow-md">
+                    <iframe src="${event.googleMapLink}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
 
-                        <div class="flex flex-wrap gap-3 mb-6">
-                            <a href="${event.uberLink ? event.uberLink : `https://m.uber.com/ul/?action=setPickup&dropoff[latitude]=${event.coordinates.lat}&dropoff[longitude]=${event.coordinates.lon}&dropoff[nickname]=${encodeURIComponent(event.venue)}`}" target="_blank" class="btn-primary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-                                <span>Book Uber</span>
-                            </a>
-                            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.gcalStartDate}/${event.gcalEndDate}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.venue + ', ' + event.address)}&sf=true&output=xml" target="_blank" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-plus"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M19 16v6"/><path d="M22 19h-6"/></svg>
-                                <span>Add to Google Calendar</span>
-                            </a>
-                            <button onclick="addToOutlook('${event.title}', '${event.gcalStartDate}', '${event.gcalEndDate}', '${event.description}', '${event.venue}, ${event.address}')" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M12 16h.01"/><path d="M16 16h.01"/><path d="M8 20h.01"/><path d="M12 20h.01"/><path d="M16 20h.01"/></svg>
-                                <span>Add to Outlook</span>
-                            </button>
-                            <button onclick="generateIcal('${event.title}', '${event.gcalStartDate}', '${event.gcalEndDate}', '${event.description}', '${event.venue}, ${event.address}')" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <a href="${event.uberLink ? event.uberLink : `https://m.uber.com/ul/?action=setPickup&dropoff[latitude]=${event.coordinates.lat}&dropoff[longitude]=${event.coordinates.lon}&dropoff[nickname]=${encodeURIComponent(event.venue)}`}" target="_blank" class="btn-primary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        <span>Book Uber</span>
+                    </a>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.gcalStartDate}/${event.gcalEndDate}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.venue + ', ' + event.address)}&sf=true&output=xml" target="_blank" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-plus"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M19 16v6"/><path d="M22 19h-6"/></svg>
+                        <span>Add to Google Calendar</span>
+                    </a>
+                    ${
+                        event.id === 'engagement'
+                        ? `<a href="https://www.icloud.com/invites/023TU9rd4a69GcIWMf2en1UPQ" target="_blank" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                <span>Apple Invite</span>
+                            </a>`
+                        : event.id === 'wedding'
+                        ? `<a href="https://www.icloud.com/invites/0cfp8Oe_GZ5e2QnaXwNXFeupw" target="_blank" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                <span>Apple Invite</span>
+                            </a>`
+                        : `<button onclick="generateIcal('${event.title}', '${event.gcalStartDate}', '${event.gcalEndDate}', '${event.description}', '${event.venue}, ${event.address}')" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
                                 <span>Add to iCal</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            // Add event listeners for toggling details
-            document.querySelectorAll('.toggle-details').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const eventId = e.currentTarget.dataset.eventId;
-                    const detailsContent = document.getElementById(`details-${eventId}`);
-                    const icon = e.currentTarget.querySelector('svg');
-
-                    if (detailsContent.classList.contains('expanded')) {
-                        detailsContent.classList.remove('expanded');
-                        icon.classList.remove('rotate-180');
-                        e.currentTarget.querySelector('span').textContent = 'View Details';
-                    } else {
-                        detailsContent.classList.add('expanded');
-                        icon.classList.add('rotate-180');
-                        e.currentTarget.querySelector('span').textContent = 'Hide Details';
+                            </button>`
                     }
-                });
-            });
+                    <button onclick="addToOutlook('${event.title}', '${event.gcalStartDate}', '${event.gcalEndDate}', '${event.description}', '${event.venue}, ${event.address}')" class="btn-secondary flex-grow text-center text-sm md:text-base inline-flex items-center justify-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M12 16h.01"/><path d="M16 16h.01"/><path d="M8 20h.01"/><path d="M12 20h.01"/><path d="M16 20h.01"/></svg>
+                        <span>Add to Outlook</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    // Add event listeners for toggling details
+    document.querySelectorAll('.toggle-details').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const eventId = e.currentTarget.dataset.eventId;
+            const detailsContent = document.getElementById(`details-${eventId}`);
+            const icon = e.currentTarget.querySelector('svg');
+
+            if (detailsContent.classList.contains('expanded')) {
+                detailsContent.classList.remove('expanded');
+                icon.classList.remove('rotate-180');
+                e.currentTarget.querySelector('span').textContent = 'View Details';
+            } else {
+                detailsContent.classList.add('expanded');
+                icon.classList.add('rotate-180');
+                e.currentTarget.querySelector('span').textContent = 'Hide Details';
+            }
+        });
+    });
         }
 
         // Function to add to Outlook Calendar (simplified approach)
