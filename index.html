@@ -518,7 +518,7 @@
                 const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+                // const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000); // Removed
 
                 displayHtml = `
                     <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
@@ -533,16 +533,12 @@
                         <div class="text-4xl font-bold text-black">${minutes}</div>
                         <div class="text-sm text-gray-600">Minutes</div>
                     </div>
-                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
-                        <div class="text-4xl font-bold text-black">${seconds}</div>
-                        <div class="text-sm text-gray-600">Seconds</div>
-                    </div>
                 `;
             } else {
                 // Happily Married counter
                 const marriedDuration = now.getTime() - weddingDate.getTime();
 
-                const seconds = Math.floor((marriedDuration / 1000) % 60);
+                // const seconds = Math.floor((marriedDuration / 1000) % 60); // Removed
                 const minutes = Math.floor((marriedDuration / (1000 * 60)) % 60);
                 const hours = Math.floor((marriedDuration / (1000 * 60 * 60)) % 24);
                 const days = Math.floor(marriedDuration / (1000 * 60 * 60 * 24));
@@ -601,6 +597,10 @@
                     <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
                         <div class="text-4xl font-bold text-black">${hours}</div>
                         <div class="text-sm text-gray-600">Hours</div>
+                    </div>
+                    <div class="countdown-item bg-gray-100 p-4 rounded-xl shadow-md">
+                        <div class="text-4xl font-bold text-black">${minutes}</div>
+                        <div class="text-sm text-gray-600">Minutes</div>
                     </div>
                 `;
             }
